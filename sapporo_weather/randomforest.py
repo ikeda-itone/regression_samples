@@ -1,7 +1,7 @@
 #----------------------------------------
 # purpose: ランダムフォレストによる回帰のテストスクリプト　学習編
 # author: hidetsugu ikeda
-# memo: 読み込むデータは、1行目に列名があり、最終列に正解（数値）が入っていること。
+# memo: 読み込むデータは、1行目に列名があり、最終列に正解（今回は降雪量）が入っていること。
 # created: 2018-06-11
 #----------------------------------------
 import pandas as pd
@@ -26,11 +26,12 @@ result = clf.score(x, y) # 学習データに対する、適合率
 with open('entry.pickle', 'wb') as f:
 	pickle.dump(clf, f)
 
-# 1個だけテスト
+# テストデータ作成
 valid_data = pd.read_csv("valid.csv", index_col="date", parse_dates=True)
 v_x = (valid_data.iloc[:, :-1]).values
 v_y = (valid_data.iloc[:, -1:]).values
 
+# テスト実行
 for val in v_x:
     test = clf.predict([val])
     print( "predict is ")
